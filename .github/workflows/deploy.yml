@@ -35,8 +35,10 @@ jobs:
         env:
             PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             HOSTNAME: ${{secrets.SSH_HOST}}
+            USER_NAME: ${{secrets.USER_NAME}}
         run: |
-          echo "$HOSTNAME"
+          echo "Hostname: $HOSTNAME"
+          echo "user: $USER_NAME"
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           scp -i private_key docs\.vitepress\dist ${USER_NAME}@${HOSTNAME}:wirl/
           
