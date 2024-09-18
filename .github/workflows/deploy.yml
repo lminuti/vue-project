@@ -27,8 +27,16 @@ jobs:
         run: pwd
       - name: list
         run: ls -l
-      - name: Some commands
+      - name: Build
         run: |
           npm install
           npm run build
+      - name: Deploy
+        env:
+            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            HOSTNAME: ${{secrets.SSH_HOST}}
+        run: |
+          echo "$HOSTNAME"
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          scp -i private_key docs\.vitepress\dist ${USER_NAME}@${HOSTNAME}:wirl/
           
