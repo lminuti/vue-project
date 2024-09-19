@@ -44,5 +44,5 @@ jobs:
           echo "Hostname: $HOSTNAME"
           echo "user: $USER_NAME"
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -i private_key dist ${USER_NAME}@${HOSTNAME}:wirl/
+          scp -i private_key StrictHostKeyChecking=no dist ${USER_NAME}@${HOSTNAME}:wirl/
           
