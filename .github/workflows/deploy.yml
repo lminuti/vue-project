@@ -38,7 +38,7 @@ jobs:
       - name: copy file via ssh with key
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.HOSTNAME }}
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: ".dist"
