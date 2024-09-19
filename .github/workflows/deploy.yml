@@ -41,16 +41,5 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./dist"
+          source: "./dist/*"
           target: "wirl"
-      - name: Deploy
-        env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            HOSTNAME: ${{secrets.SSH_HOST}}
-            USER_NAME: ${{secrets.USER_NAME}}
-        run: |
-          echo "Hostname: $HOSTNAME"
-          echo "user: $USER_NAME"
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -i private_key StrictHostKeyChecking=no dist ${USER_NAME}@${HOSTNAME}:wirl/
-          
