@@ -41,7 +41,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ".dist"
+          source: "./dist"
           target: "wirl"
       - name: Deploy
         env:
