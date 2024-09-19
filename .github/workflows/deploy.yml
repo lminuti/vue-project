@@ -11,16 +11,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2 
-      - name: Build & Deploy
+      - name: Save key
         env:
             PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             HOSTNAME: ${{secrets.SSH_HOST}}
             USER_NAME: ${{secrets.USER_NAME}}
 
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          echo "node version"
-          node -v
+        run: echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
       - name: node version
         run: node -v
       - name: where 
@@ -31,6 +28,8 @@ jobs:
         run: |
           npm install
           npm run build
+      - name: list deploy
+        run: ls -l docs/.vitepress/dist
       - name: Deploy
         env:
             PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -40,5 +39,5 @@ jobs:
           echo "Hostname: $HOSTNAME"
           echo "user: $USER_NAME"
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -i private_key docs\.vitepress\dist ${USER_NAME}@${HOSTNAME}:wirl/
+          scp -i private_key docs/.vitepress/dist ${USER_NAME}@${HOSTNAME}:wirl/
           
