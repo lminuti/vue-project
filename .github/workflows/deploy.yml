@@ -10,36 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: check repository
+      - name: Checkout repository
         uses: actions/checkout@v4.1.7
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.3
         with:
             node-version: '18'      
-      - name: Save key
-        env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            HOSTNAME: ${{secrets.SSH_HOST}}
-            USER_NAME: ${{secrets.USER_NAME}}
-
-        run: echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-      - name: node version
-        run: node -v
-      - name: where 
-        run: pwd
-      - name: list
-        run: ls -l
-      - name: Build
+      - name: Install & Build
         run: |
           npm install
           npm run build
-      - name: list deploy
+      - name: List generated files
         run: ls -l dist
-      - name: copy file via ssh with key
+      - name: Copy file via ssh with key
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./dist/*"
-          target: "wirl"
+          source: dist/*
+          target: wirl
