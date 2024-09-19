@@ -35,6 +35,14 @@ jobs:
           npm run build
       - name: list deploy
         run: ls -l dist
+      - name: copy file via ssh with key
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ".dist"
+          target: "wirl"
       - name: Deploy
         env:
             PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
