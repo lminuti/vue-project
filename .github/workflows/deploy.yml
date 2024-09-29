@@ -29,3 +29,8 @@ jobs:
           strip_components: 1
           source: dist
           target: /var/web/action.test
+      - name: Cloudflare Cache Cleaner
+        uses: Cyb3r-Jak3/action-cloudflare-cache@v2.0.0
+        with:
+          zone: ${{ secrets.CF_ZONE_ID }}
+          api_token: ${{ secrets.CF_API_TOKEN }}
